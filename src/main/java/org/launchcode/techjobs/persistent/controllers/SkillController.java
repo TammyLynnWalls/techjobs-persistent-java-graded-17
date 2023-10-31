@@ -20,7 +20,10 @@ public class SkillController {
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("title", "skills");
+        model.addAttribute("title", "All Skills");
+        //TODO for Tam: should this be here?  Am I using the correct names?
+        model.addAttribute("skills", skillRepository.findAll());
+
         return "skills/index";
     }
 
@@ -36,7 +39,11 @@ public class SkillController {
             return "skills/add";
         }
         skillRepository.save(newSkill);
-        return "redirect:";
+
+        //TODO for Tam: is this correct? book says: return "redirect:";
+        return "redirect:/skills";
+        //return "skills/index";
+//        return "redirect:/view";
     }
 
     @GetMapping("view/{skillId}")
@@ -47,6 +54,9 @@ public class SkillController {
             skill = (Skill) optSkill.get();
             return "skills/view";
         } else {
+
+
+            //TODO for Tam: is this correct?
             return "redirect:../";
         }
     }
