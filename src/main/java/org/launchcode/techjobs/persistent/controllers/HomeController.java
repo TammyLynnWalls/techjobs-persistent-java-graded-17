@@ -1,7 +1,11 @@
 package org.launchcode.techjobs.persistent.controllers;
 
 import jakarta.validation.Valid;
+import org.launchcode.techjobs.persistent.models.Employer;
 import org.launchcode.techjobs.persistent.models.Job;
+import org.launchcode.techjobs.persistent.models.data.EmployerRepository;
+import org.launchcode.techjobs.persistent.models.data.JobRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -17,6 +21,12 @@ import java.util.Optional;
 @Controller
 public class HomeController {
 
+    @Autowired
+    private EmployerRepository employerRepository;
+
+    @Autowired
+    private JobRepository jobRepository;
+
     @RequestMapping("/")
     public String index(Model model) {
 
@@ -28,6 +38,7 @@ public class HomeController {
     @GetMapping("add")
     public String displayAddJobForm(Model model) {
 	model.addAttribute("title", "Add Job");
+        model.addAttribute("employers", employerRepository.findAll());
         model.addAttribute(new Job());
         return "add";
     }
@@ -40,7 +51,16 @@ public class HomeController {
 	    model.addAttribute("title", "Add Job");
             return "add";
         }
-
+        //TODO for tam: added in this code block, it may be rubbish...
+        Employer employer = null;
+        Optional optEmployer = employerRepository.findById(employerId);
+        if (optEmployer.isPresent()) {
+            employer = (Employer) optEmployer.get();
+           // model.addAttribute("employer", employer);
+            newJob.setEmployer(employer);
+            jobRepository.save(newJob);
+        }
+      //  jobRepository.save(newJob);
         return "redirect:";
     }
 

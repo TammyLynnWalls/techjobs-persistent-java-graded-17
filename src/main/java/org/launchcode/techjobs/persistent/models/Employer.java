@@ -18,7 +18,7 @@ public class Employer extends AbstractEntity {
 //TODO for tam:  verify if "employer" is correct for the JoinColumn
     @OneToMany
     @JoinColumn(name = "employer")
-    private List jobs = new ArrayList<>();
+    private List<Job> jobs = new ArrayList<>();
 
     public String getLocation() {
         return location;
