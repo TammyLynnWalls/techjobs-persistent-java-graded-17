@@ -17,8 +17,10 @@ public class Employer extends AbstractEntity {
 
 //TODO for tam:  verify if "employer" is correct for the JoinColumn
     @OneToMany
-    @JoinColumn(name = "employer")
+    @JoinColumn(name = "employer_id")
     private List<Job> jobs = new ArrayList<>();
+
+    public Employer() {}
 
     public String getLocation() {
         return location;
@@ -28,5 +30,13 @@ public class Employer extends AbstractEntity {
         this.location = location;
     }
 
-    public Employer() {}
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
+
+
 }

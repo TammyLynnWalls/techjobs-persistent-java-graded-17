@@ -17,7 +17,7 @@ public class EmployerController {
     @Autowired
     private EmployerRepository employerRepository;
 
-    @GetMapping
+    @RequestMapping("/")
     public String index(Model model) {
         model.addAttribute("title", "All employers" );
         model.addAttribute("employers", employerRepository.findAll());
@@ -41,17 +41,17 @@ public class EmployerController {
         employerRepository.save(newEmployer);
 
         //TODO for Tam: is this correct? book says: return "redirect:";
-        return "redirect:/employers";
+        return "redirect:";
         //return "employers/index";
     }
 
     @GetMapping("view/{employerId}")
     public String displayViewEmployer(Model model, @PathVariable int employerId) {
 
-        Employer employer = null;
+
         Optional optEmployer = employerRepository.findById(employerId);
         if (optEmployer.isPresent()) {
-            employer = (Employer) optEmployer.get();
+            Employer employer = (Employer) optEmployer.get();
             model.addAttribute("employer", employer);
             return "employers/view";
         } else {
